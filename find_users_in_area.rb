@@ -80,6 +80,7 @@ work = lambda do |obj|
       unless user_ids.include?(id)
         user_ids.add(id)
         users_logger.write("#{id}\n")
+        users_logger.flush
       end
     end
     puts "total: #{tweet_count}; retweet: #{retweet_count}; quote: #{quote_count}"

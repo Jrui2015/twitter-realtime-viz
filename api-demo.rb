@@ -16,7 +16,7 @@ class Twitter::Tweet
     s = ''
     s += '----------'
     s += "\n#{self.created_at}\n"
-    s += "#{self.user.name}: #{self.text[0...10]}... (#{self.retweet_count})\n"
+    s += "#{self.user.name}: #{self.text[0...10]}... (\u2937 #{self.retweet_count} \u2665 #{self.favorite_count})\n"
     unless self.retweeted_tweet.nil?
       s += "retweeted from: #{self.retweeted_tweet.text[0...10]} (#{self.retweeted_tweet.retweet_count} retweets)\n"
     end
@@ -27,9 +27,19 @@ class Twitter::Tweet
   end
 end
 
+tweet_count = 0
+retweet_count = 0
+quote_count = 0
+hashtag_count = 0
+geo_count = 0
 client.filter(locations: '-74,40,-73,41') do |obj|
   next unless obj.is_a?(Twitter::Tweet)
+  tweet_count += 1
   puts obj
-  binding.pry unless obj.retweeted_tweet.nil?
-  binding.pry if obj.quote?
+  retweet_count += 1 unless obj.retweeted_tweet.nil?
+  quote_count += 1 if obj.quote?
+  hashtag_count += 1 unless obj.hashtags.empty?
+  geo_count += 1 unless (obj.geo.nil? or obj.geo.coordinates.empty?)
+  puts "total: #{tweet_count}; retweet: #{retweet_count}; quote: #{quote_count}"
+  puts "have_hashtags: #{hashtag_count}; have_geo: #{geo_count}"
 end

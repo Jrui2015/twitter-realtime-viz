@@ -11,14 +11,25 @@ client = Twitter::Streaming::Client.new do |config|
   config.access_token_secret = File.readlines('config').map(&:strip)
 end
 
-i = 0
-objs = []
-client.filter(locations: '-74,40,-73,41') do |obj|
-  objs.push(obj)
-  puts "#{obj.user.name}: #{obj.text}"
-  i += 1
-  break if obj.retweet_count > 0
+class Twitter::Tweet
+  def to_s
+    s = ''
+    s += '----------'
+    s += "\n#{self.created_at}\n"
+    s += "#{self.user.name}: #{self.text[0...10]}... (#{self.retweet_count})\n"
+    unless self.retweeted_tweet.nil?
+      s += "retweeted from: #{self.retweeted_tweet.text[0...10]} (#{self.retweeted_tweet.retweet_count} retweets)\n"
+    end
+    s += "quote: #{self.quoted_tweet.text[0...10]}...(#{self.quoted_tweet.retweet_count})\n" if self.quote?
+    s += "hashtags: #{self.hashtags.map(&:text)}\n" unless self.hashtags.empty?
+    s += "geo: #{self.geo.coordinates}\n" unless (self.geo.nil? or self.geo.coordinates.empty?)
+    s += '----------'
+  end
 end
 
-o = objs[-1]
-binding.pry
+client.filter(locations: '-74,40,-73,41') do |obj|
+  next unless obj.is_a?(Twitter::Tweet)
+  puts obj
+  binding.pry unless obj.retweeted_tweet.nil?
+  binding.pry if obj.quote?
+end

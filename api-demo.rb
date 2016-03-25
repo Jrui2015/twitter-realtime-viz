@@ -10,6 +10,6 @@ client = Twitter::Streaming::Client.new do |config|
   config.access_token_secret = File.readlines('config').map(&:strip)
 end
 
-client.sample do |obj|
+client.filter(locations: '-74,40,-73,41') do |obj|
   puts obj.text if obj.is_a? Twitter::Tweet
 end

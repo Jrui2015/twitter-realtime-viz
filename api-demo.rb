@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 require 'rubygems'
 require 'bundler/setup'
-Bundler.require
+require 'pry'
+require 'twitter'
 
 client = Twitter::Streaming::Client.new do |config|
   config.consumer_key,
@@ -10,6 +11,14 @@ client = Twitter::Streaming::Client.new do |config|
   config.access_token_secret = File.readlines('config').map(&:strip)
 end
 
+i = 0
+objs = []
 client.filter(locations: '-74,40,-73,41') do |obj|
-  puts obj.text if obj.is_a? Twitter::Tweet
+  objs.push(obj)
+  puts "#{obj.user.name}: #{obj.text}"
+  i += 1
+  break if obj.retweet_count > 0
 end
+
+o = objs[-1]
+binding.pry

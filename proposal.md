@@ -4,9 +4,20 @@
 > 4. create a concise but effective table for data abstraction
 
 # What is the problem you want to sovle and who has this problem?
+> background
+in what kind of situations our solution is needed
+what our dataset is about
+who has this problem and how do they benefit from our solution
+
 In this project, we focus on the tweets of NYC in realtime. 
 
 # What questions do you want to be able to answer with you viz?
+
+> What do you mean by questions is data analysis questions. It's questions about data and domain that you can answer when you use your visualization
+
+> specific: find customers with similar behaviors
+> V.S. abstract: cluster of dataset coordinates according to their similarity
+
 In order to help advertisers find the very targeted customers / users find others with same hobbies / socialists to analyze citizens in NYC, we need to??
 
 # details

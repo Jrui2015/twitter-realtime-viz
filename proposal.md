@@ -23,7 +23,7 @@ be specific, not abstract
 问题：
 1. 如何发现当前热门话题？用最近数分钟内时间段按转发次数排序的列表（list）展示，排在越前面的就是越热门的话题。
 2. 如何发现不同地区人们的兴趣差异？在地理地图上用颜色标记不同话题类型（category），颜色在不同地区的集聚差异表明了不同地区人们的差异。
-3. 如何发现谁对话题变得热门贡献最大？
+3. 如何发现谁对话题变得热门贡献最大？用话题传播的网络，使用者可以选择将某个节点”关闭“，所有exclusive经过此点转发的路径均显示为未被传播。通过对比关闭节点前后话题的传播范围，可获知此用户在传播中的影响力。
 4. 如何定位人们在热门话题的传播链所处的位置？
 5. 具有相似兴趣的用户，是否在话题传播的位置也类似？
 
@@ -34,6 +34,11 @@ be specific, not abstract
 ## What is their meaning?
 ## What are their attribute types (data abstraction)?
 ## Do you plan to generate derived attributes? If yes, which and why?
+至少有两个衍生数据：
+1. class of topic
+2. geolocation distict
+3. 用户兴趣组
+
 original:
 | attribute name  | attribute type  | description | value range | derived |
 | --------------- | --------------- | ----------- | ----------- | ------- |

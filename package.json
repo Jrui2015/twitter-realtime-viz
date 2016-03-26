@@ -1,0 +1,28 @@
+{
+  "name": "twitter-realtime-viz",
+  "version": "0.0.1",
+  "description": "Visualization of realtime twitter stream",
+  "main": "index.js",
+  "dependencies": {
+    "mongodb": "^2.1.11",
+    "node-tweet-stream": "^1.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robturtle/twitter-realtime-viz.git"
+  },
+  "keywords": [
+    "twitter",
+    "visualization"
+  ],
+  "author": "Yang Liu <yl3710@nyu.edu>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/robturtle/twitter-realtime-viz/issues"
+  },
+  "homepage": "https://github.com/robturtle/twitter-realtime-viz#readme"
+}

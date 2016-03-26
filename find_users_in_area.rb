@@ -5,7 +5,7 @@ require 'pry'
 require 'twitter'
 
 bounding_boxes = {
-  world: '-180,-90,-180,90', # Twitter::Error -- not acceptable
+  world: '-180,-90,180,90',
   nyc: '-74,40,-73,41',
 }
 

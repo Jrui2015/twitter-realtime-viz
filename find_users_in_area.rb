@@ -3,6 +3,8 @@ require 'rubygems'
 require 'bundler/setup'
 require 'pry'
 require 'twitter'
+require 'mongo'
+db = Mongo::Client.new(['localhost:27017'], database: 'realtime-twitter-viz')
 
 bounding_boxes = {
   world: '-180,-90,180,90',
@@ -58,14 +60,7 @@ quote_count ||= 0
 hashtag_count ||= 0
 geo_count ||= 0
 
-user_ids_fname = "users_in_#{area}.ids"
-begin
-  user_ids = Set.new(File.readlines(user_ids_fname).map(&:to_i))
-rescue Errno::ENOENT => err
-  puts "#{err}. Create new user id list"
-end
-user_ids ||= Set.new
-users_logger = File.open(user_ids_fname, "a")
+user_ids = Set.new(db[:users].find())
 
 work = lambda do |obj|
     next unless obj.is_a?(Twitter::Tweet)
@@ -79,8 +74,8 @@ work = lambda do |obj|
       id = obj.user.id
       unless user_ids.include?(id)
         user_ids.add(id)
-        users_logger.write("#{id}\n")
-        users_logger.flush
+        db[:users].insert_one({ _id: id })
+        puts "inserting user id #{id}"
       end
     end
     puts "total: #{tweet_count}; retweet: #{retweet_count}; quote: #{quote_count}"

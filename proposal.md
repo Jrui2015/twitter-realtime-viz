@@ -20,7 +20,12 @@ be specific, not abstract
 1. specific: find customers with similar behaviors
 2. abstract: cluster of dataset coordinates according to their similarity
 
-In order to help advertisers find the very targeted customers / users find others with same hobbies / socialists to analyze citizens in NYC, we need to??
+问题：
+1. 如何发现当前热门话题？用最近数分钟内时间段按转发次数排序的列表（list）展示，排在越前面的就是越热门的话题。
+2. 如何发现不同地区人们的兴趣差异？在地理地图上用颜色标记不同话题类型（category），颜色在不同地区的集聚差异表明了不同地区人们的差异。
+3. 如何发现谁对话题变得热门贡献最大？
+4. 如何定位人们在热门话题的传播链所处的位置？
+5. 具有相似兴趣的用户，是否在话题传播的位置也类似？
 
 # details
 ## What is your data about?
@@ -32,27 +37,27 @@ In order to help advertisers find the very targeted customers / users find other
 original:
 | attribute name  | attribute type  | description | value range | derived |
 | --------------- | --------------- | ----------- | ----------- | ------- |
-| geolocation  | Categorical  | the location of tweets | -180~180, -90~90 | N
-| hashtags  | Categorical  | the content after "#" tag in tweets | N
-| created time | Ordinal | when did the tweets be posted |20160324 - present| N
-| retweeted/quoted tweets (as links) | Categorical | ???
-| mentions | Categorical | the users has been mentions("@") in tweets |  | N
-| favorite/retweet/quote count | Quantitative | the number of times of "favorite" and retweet/quote of tweets | N
-| lang | Categorical | the language used of tweets | N
-| text(as detail) | Categorical | the content of each tweets | N
+| geolocation  | Categorical  | the location of tweets | -180~180, -90~90 | N |
+| hashtags  | Categorical  | the content after "#" tag in tweets | N |
+| created time | Ordinal | when did the tweets be posted |20160324 - present| N  |
+| retweeted/quoted tweets (as links) | Categorical | ??? |
+| mentions | Categorical | the users has been mentions("@") in tweets |  | N |
+| favorite/retweet/quote count | Quantitative | the number of times of "favorite" and retweet/quote of tweets | N |
+| lang | Categorical | the language used of tweets | N |
+| text(as detail) | Categorical | the content of each tweets | N |
 
 alternate:
 | attribute name  | attribute type  | description | value range | derived |
 | --------------- | --------------- | ----------- | ----------- | ------- |
-| user | Categorical  | the author name of a tweet |  | N
-| geolocation  | Categorical  | the location name of tweets | -180~180, -90~90 | N
-| hot_issue  | Categorical  | the hot topics | Y
-| created time | Ordinal | when did the tweets be posted |20160324 - present| N
-| retweeted/quoted tweets count | Quantitative | times of retweeted/quote of a tweet | N
-| mentions | Categorical | the users has been mentions("@") in tweets |  | N
-| favorite count | Quantitative | times of "favorite" of a tweet | N
-| lang | Categorical | the language used of tweets | N
-| text | Categorical | the content of each tweets | N
+| user | Categorical  | the author name of a tweet |  | N |
+| geolocation  | Categorical  | the location name of tweets | -180~180, -90~90 | N |
+| hot_issue  | Categorical  | the hot topics | Y |
+| created time | Ordinal | when did the tweets be posted |20160324 - present| N |
+| retweeted/quoted tweets count | Quantitative | times of retweeted/quote of a tweet | N |
+| mentions | Categorical | the users has been mentions("@") in tweets |  | N |
+| favorite count | Quantitative | times of "favorite" of a tweet | N |
+| lang | Categorical | the language used of tweets | N |
+| text | Categorical | the content of each tweets | N |
 
 
 - geolocation => area

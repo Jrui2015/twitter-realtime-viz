@@ -10,6 +10,9 @@ talk about:
 3. what our dataset is about  
 4. who has this problem and how do they benefit from our solution  
 
+1&2.推特上有大量的信息，有些对于用户有用的信息常常淹没在巨大的信息量中； 针对用户感兴趣的话题分类，目前推特并没有提供一种有效的途径来展示最新最热的变化趋势; 基于庞大的用户数量，用户可能会错过许多值得关注的推主。our solution 在上述情况下，用户可能需要一种快速筛选推特消息的工具来帮助他们更好地了解推特世界。
+3. 通过跟踪并分析实时发送的推特消息
+
 In this project, we focus on the tweets of NYC in realtime. 
 
 # What questions do you want to be able to answer with you viz?
@@ -23,11 +26,9 @@ be specific, not abstract
 
 问题：
 
-1. 如何发现当前热门话题？用最近数分钟内时间段按转发次数排序的列表（list）展示，排在越前面的就是越热门的话题。
+1. 如何发现当前热门话题？用最近数分钟内时间段按话题频次排序的列表（list）展示，排在越前面的就是越热门的话题。
 2. 如何发现不同地区人们的兴趣差异？在地理地图上用颜色标记不同话题类型（category），颜色在不同地区的集聚差异表明了不同地区人们的差异。
-3. 如何发现谁对话题变得热门贡献最大？用话题传播的网络，使用者可以选择将某个节点”关闭“，所有exclusive经过此点转发的路径均显示为未被传播。通过对比关闭节点前后话题的传播范围，可获知此用户在传播中的影响力。
-4. 如何定位人们在热门话题的传播链所处的位置？
-5. 具有相似兴趣的用户，是否在话题传播的位置也类似？
+3. 如何发现谁对话题变得热门贡献最大？nework { node: user, area size: retweet/fav count of tweets under certain topic, link: retweet/fav }
 
 # details
 ## What is your data about?

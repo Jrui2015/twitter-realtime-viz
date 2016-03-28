@@ -8,7 +8,9 @@ let followToken = require('./config/follow');
 MongoClient.connect(url, (err, db) => {
   assert.equal(null, err);
   var collection = db.collection('users');
-  collection.find({}).toArray((err, docs) => {
+  // TODO think a way to split users on separated streams
+  collection.find({}).limit(5000).toArray((err, docs) => {
+    console.log(`totally ${docs.length} users`);
     var users = docs.map((d) => {return d._id;}).join(',');
     startFollowing(users);
     db.close();
@@ -30,37 +32,11 @@ function startFollowing(users) {
       assert.equal(null, err);
       var tweets = db.collection('tweets');
 
-      var t = {
-        _id: json.id_str,
-        created_at: json.created_at,
-        text: json.text,
-        source: json.source,
-        coordinates: json.coordinates,
-        place: json.place,
-        retweet_count: json.retweet_count,
-        favorite_count: json.favorite_count,
-        entities: json.entities,
-        user: {
-          _id: json.user.id_str,
-          created_at: json.user.created_at,
-          name: json.user.name,
-          screen_name: json.user.screen_name,
-          location: json.user.location,
-          description: json.user.description,
-          followers_count: json.user.followers_count,
-          friends_count: json.user.friends_count,
-          listed_count: json.user.listed_count,
-          favourites_count: json.user.favorites_count,
-          statuses_count: json.user.statuses_count,
-          time_zone: json.user.time_zone,
-          lang: json.user.lang
-        }
-      };
+      console.log(`${json.user.name}: ${json.text.substr(0,10)}... (\u2937 ${json.retweet_count} \u2665 ${json.favorite_count})`);
 
-      tweets.save(t, (err, result) => {
-        console.log(`save tweet '${json.text}'`);
-        db.close();
-      });
+      // tweets.save(json, (err, result) => {
+      //   db.close();
+      // });
 
     });
 

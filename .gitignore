@@ -2,3 +2,5 @@
 node_modules
 log/
 *.ids
+/nyc.log
+/tweets.log

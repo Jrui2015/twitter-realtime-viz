@@ -60,8 +60,6 @@ quote_count ||= 0
 hashtag_count ||= 0
 geo_count ||= 0
 
-user_ids = Set.new(db[:users].find())
-
 work = lambda do |obj|
     next unless obj.is_a?(Twitter::Tweet)
     tweet_count += 1
@@ -72,11 +70,7 @@ work = lambda do |obj|
     unless (obj.geo.nil? or obj.geo.coordinates.empty?)
       geo_count += 1
       id = obj.user.id
-      unless user_ids.include?(id)
-        user_ids.add(id)
-        db[:users].insert_one({ _id: id })
-        puts "inserting user id #{id}"
-      end
+      db[:users].update_one({ _id: id }, { updated_at: Time.now }, upsert: true)
     end
     puts "total: #{tweet_count}; retweet: #{retweet_count}; quote: #{quote_count}"
     puts "have_hashtags: #{hashtag_count}; have_geo: #{geo_count}"

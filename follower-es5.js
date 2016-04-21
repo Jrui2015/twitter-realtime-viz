@@ -7,6 +7,21 @@ var assert = require('assert');
 var Stream = require('node-tweet-stream');
 var followToken = require('./config/follow' + users_part);
 
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/index.html');
+});
+
+io.on('connection', function(socket) {
+  console.log('a user connected');
+  socket.on('disconnect', function() {
+    console.log('user disconnected');
+  });
+});
+
 // Setup stream
 var follower = new Stream({
   consumer_key: followToken.consumer_key,
@@ -20,7 +35,7 @@ follower.on('tweet', function(tweet) {
   var brief = ++count + tweet.user.name + ': ' + tweet.text.substr(0,10) + '... ' +
         '\u2937 ' + tweet.retweet_count + '\u2665 ' + tweet.favorite_count;
 
-  // TODO use web socket
+  io.emit('tweet', tweet);
 
   // stdout
   console.log(brief);
@@ -68,3 +83,7 @@ function fetchActiveUsersAndFollows() {
 
 // Let's start it
 fetchActiveUsersAndFollows();
+
+http.listen(80, function() {
+  console.log('listening on *:80');
+});

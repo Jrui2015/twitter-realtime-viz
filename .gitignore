@@ -4,5 +4,4 @@ log/
 *.ids
 /nyc.log
 /tweets.log
-index.html
 .idea

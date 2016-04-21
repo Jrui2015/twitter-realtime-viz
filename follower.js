@@ -20,18 +20,18 @@ var follower = new Stream({
 });
 
 var count = 0;
-follower.on('tweet', json => {
+follower.on('tweet', tweet => {
   // transfer to client
   // TODO use web socket
 
   // stdout
   console.log(`${++count}: ` +
-              `${json.user.name}: ${json.text.substr(0,10)}... ` +
-              `(\u2937 ${json.retweet_count} \u2665 ${json.favorite_count})`);
+              `${tweet.user.name}: ${tweet.text.substr(0,10)}... ` +
+              `(\u2937 ${tweet.retweet_count} \u2665 ${tweet.favorite_count})`);
 
   MongoClient.connect(url, (err, db) => {
     assert.equal(null, err);
-    db.collection('tweets').insert(json, () => db.close());
+    db.collection('tweets').insert(tweet, () => db.close());
   });
 
 });
@@ -39,11 +39,6 @@ follower.on('tweet', json => {
 
 follower.on('error', (err) => {
   console.log(err);
-  if (tweets.length) {
-    db.collection('tweets')
-      .insert(tweets, (err, result) => db.close());
-    tweets = [];
-  }
 });
 
 
@@ -54,6 +49,7 @@ follower.on('error', (err) => {
 // TODO add parameter user_part
 function getRecentActiveUsers(db, callback) {
   var cursor = db.collection('users').find({
+    // TODO use easy-date package
     updated_at: {$gte: new Date(new Date().getTime() - 24*60*60*1000)}
   });
 
@@ -90,4 +86,5 @@ function fetchActiveUsersAndFollows() {
 
 // Let's start it
 // TODO start multiple (i.e. 2) follower lines
+// different reconnect time make data flow smoother
 fetchActiveUsersAndFollows();
